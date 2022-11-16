@@ -46,6 +46,17 @@ function App() {
         setTasks(newTask)
     }
 
+    const onChangeCheckBox = (taskId: string, eventValue: boolean) => {
+
+
+
+
+        // const newTask = tasks.map(t => {
+        //     return t.id === taskId ? {...t, isDone: !t.isDone}: t
+        // })
+        // setTasks(newTask)
+    }
+
     return (
         <div className="App">
             <TodoList title={'Whats to learn'}
@@ -53,6 +64,7 @@ function App() {
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      onChangeCheckBox={onChangeCheckBox}
             />
         </div>
     );
