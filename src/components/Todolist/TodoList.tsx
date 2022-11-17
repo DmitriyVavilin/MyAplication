@@ -15,26 +15,27 @@ type TodoListPropsType = {
 
 export const TodoList = (props: TodoListPropsType) => {
 
-    const [title, setTitle]=useState('')
-    const [error,setError]=useState(false)
+    const [title, setTitle] = useState('')
+    const [error, setError] = useState<string | null>(null)
+    const[activeButton, setActiveButton]=useState<FilterValueType>('all')
 
     const addTask = () => {
-        if(title.trim() !== '') {
+        if (title.trim() !== '') {
             props.addTask(title.trim())
             setTitle('')
+        } else {
+            setError('Title is required')
         }
     }
 
     const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        if(event.key === 'Enter'){
+        if (event.key === 'Enter') {
             addTask()
-        }else {
-            setError(true)
         }
     }
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setError(true)
+        setError(null)
        setTitle(event.currentTarget.value)
     }
 
@@ -42,8 +43,9 @@ export const TodoList = (props: TodoListPropsType) => {
         props.removeTask(tId)
     }
 
-    const changeFilter = (filterValue: FilterValueType) => {
+    const changeFilterHandler = (filterValue: FilterValueType) => {
         props.changeFilter(filterValue)
+        setActiveButton('all' && 'active' && 'completed')
     }
 
 
@@ -54,6 +56,7 @@ export const TodoList = (props: TodoListPropsType) => {
                 <input className={error ?s.error : ''} value={title} onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}/>
                 <Button name={'+'} callBack={addTask}/>
+                {error &&  <div className={s.errorMessage}>Title is required</div>}
             </div>
             <ul>
                 {props.tasks.map((el) => {
@@ -74,10 +77,10 @@ export const TodoList = (props: TodoListPropsType) => {
                     </li>
                 })}
             </ul>
-            <div>
-                <Button name={'All'} callBack={()=>changeFilter('all')}/>
-                <Button name={'Active'} callBack={()=>changeFilter('active')}/>
-                <Button name={'Completed'} callBack={()=>changeFilter('completed')}/>
+            <div >
+                <Button filterValue={'all'} name={'All'} callBack={()=>changeFilterHandler('all')}/>
+                <Button filterValue={'active'} name={'Active'} callBack={()=>changeFilterHandler('active')}/>
+                <Button filterValue={'completed'} name={'Completed'} callBack={()=>changeFilterHandler('completed')}/>
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TodoList} from "./components/TodoList";
+import {TodoList} from "./components/Todolist/TodoList";
 import {v1} from "uuid";
 
 export type TaskType = {
@@ -47,7 +47,7 @@ function App() {
     }
 
     const onChangeCheckBox = (taskId: string, eventValue: boolean) => {
-
+        setTasks(tasks.map(el=> el.id === taskId ? {...el, isDone: eventValue} : el))
 
 
 
