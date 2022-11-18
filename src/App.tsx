@@ -49,12 +49,6 @@ function App() {
     const onChangeCheckBox = (taskId: string, eventValue: boolean) => {
         setTasks(tasks.map(el=> el.id === taskId ? {...el, isDone: eventValue} : el))
 
-
-
-        // const newTask = tasks.map(t => {
-        //     return t.id === taskId ? {...t, isDone: !t.isDone}: t
-        // })
-        // setTasks(newTask)
     }
 
     return (

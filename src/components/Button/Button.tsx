@@ -1,5 +1,5 @@
 import React from "react";
-import style from '../Todolist/TodoList.module.css'
+import s from '../Todolist/TodoList.module.css'
 import {FilterValueType} from "../../App";
 
 type ButtonType = {
@@ -14,7 +14,7 @@ export const Button = (props: ButtonType) => {
         props.callBack()
     }
 
-    const classBtn = props.name.toLowerCase() === props.filterValue ? style.activeFilter : '';
+    const classBtn = props.name.toLowerCase() === props.filterValue ? s.activeFilter : '';
 
     return(
         <button className={classBtn} onClick={onclickHandler}>{props.name}</button>

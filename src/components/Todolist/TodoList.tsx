@@ -45,7 +45,10 @@ export const TodoList = (props: TodoListPropsType) => {
 
     const changeFilterHandler = (filterValue: FilterValueType) => {
         props.changeFilter(filterValue)
-        setActiveButton('all' && 'active' && 'completed')
+    }
+
+    const onChangeCheckBoxHandler = (tId: string,eventValue: boolean) => {
+        props.onChangeCheckBox(tId,eventValue)
     }
 
 
@@ -64,15 +67,10 @@ export const TodoList = (props: TodoListPropsType) => {
                     //     props.removeTask(el.id)
                     // }
 
-                    const onChangeCheckBoxHandler = (event: ChangeEvent<HTMLInputElement>) => {
-                        props.onChangeCheckBox(el.id,event.currentTarget.checked)
-                    }
-
-
-                    return <li
+                    return <li className={el.isDone ? s.isDone : ''}
                         key={el.id}>
                         <input type="checkbox" checked={el.isDone}
-                               onChange={onChangeCheckBoxHandler}/> <span>{el.title}</span>
+                               onChange={(event)=>onChangeCheckBoxHandler(el.id, event.currentTarget.checked)}/> <span>{el.title}</span>
                         <Button name={'XXX'} callBack={()=>removeTaskHandler(el.id)}/>
                     </li>
                 })}
