@@ -15,7 +15,6 @@ export const Button = (props: ButtonType) => {
     }
 
     const classBtn = props.name.toLowerCase() === props.filterValue ? s.activeFilter : '';
-
     return(
         <button className={classBtn} onClick={onclickHandler}>{props.name}</button>
     )

@@ -7,6 +7,7 @@ import s from './TodoList.module.css'
 type TodoListPropsType = {
     title: string
     tasks: TaskType[]
+    filter: FilterValueType
     removeTask: (taskId: string)=>void
     changeFilter:(value: FilterValueType)=>void
     addTask:(title: string)=>void
@@ -76,9 +77,9 @@ export const TodoList = (props: TodoListPropsType) => {
                 })}
             </ul>
             <div >
-                <Button filterValue={'all'} name={'All'} callBack={()=>changeFilterHandler('all')}/>
-                <Button filterValue={'active'} name={'Active'} callBack={()=>changeFilterHandler('active')}/>
-                <Button filterValue={'completed'} name={'Completed'} callBack={()=>changeFilterHandler('completed')}/>
+                <Button filterValue={props.filter} name={'All'} callBack={()=>changeFilterHandler('all')}/>
+                <Button filterValue={props.filter} name={'Active'} callBack={()=>changeFilterHandler('active')}/>
+                <Button filterValue={props.filter} name={'Completed'} callBack={()=>changeFilterHandler('completed')}/>
             </div>
         </div>
     )
