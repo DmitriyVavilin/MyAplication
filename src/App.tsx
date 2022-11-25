@@ -19,60 +19,81 @@ export type TodoListType = {
 
 
 function App() {
+    const removeTask = (taskId: string, todoListId: string) => {
+        let tasks = tasksObj[todoListId]
+        const filterTasks = tasks.filter((el) => el.id !== taskId)
+        tasksObj[todoListId] = filterTasks
+        setTasksObj({...tasksObj})
+    }
 
-    const [tasks, setTasks] = useState<TaskType[]>([
-        {id: v1(), title: "HTML&CSS", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "ReactJS", isDone: false},
-        {id: v1(), title: "Graph Ql", isDone: false},
-        {id: v1(), title: "Redux", isDone: true},
+
+    const changeFilter = (value: FilterValueType, todoListId: string) => {
+        let todoList = todoLists.find(el => el.id === todoListId)
+        if (todoList) {
+            todoList.filter = value
+            setTodolists([...todoLists])
+        }
+    }
+
+    const addTask = (title: string, todoListId: string) => {
+        let task = {id: v1(), title: title, isDone: true}
+        let tasks = tasksObj[todoListId]
+        let newTask = [task, ...tasks]
+        tasksObj[todoListId] = newTask
+        setTasksObj({...tasksObj})
+    }
+
+    const onChangeCheckBox = (taskId: string, eventValue: boolean, todoListId: string) => {
+        let tasks = tasksObj[todoListId]
+        let task = tasks.find(el => el.id === taskId ? {...el, isDone: eventValue} : el)
+        setTasksObj({...tasksObj})
+    }
+
+    let todolistId1 = v1()
+    let todolistId2 = v1()
+
+    let [todoLists, setTodolists] = useState<Array<TodoListType>>([
+        {id: todolistId1, title: 'What to learn', filter: 'completed'},
+        {id: todolistId2, title: 'What to buy' +
+                '', filter: 'active'}
     ])
 
-
-    const removeTask = (taskId: string) => {
-        const filterTasks = tasks.filter((el) => el.id !== taskId)
-        setTasks(filterTasks)
-    }
-
-    const changeFilter = (value: FilterValueType) => {
-        setFilter(value)
-    }
-
-    const addTask = (title: string) => {
-        let task = {id: v1(), title: title, isDone: true}
-        let newTask = [task, ...tasks]
-        setTasks(newTask)
-    }
-
-    const onChangeCheckBox = (taskId: string, eventValue: boolean) => {
-        setTasks(tasks.map(el => el.id === taskId ? {...el, isDone: eventValue} : el))
-
-    }
-
-
-    let todoLists: Array<TodoListType> = [
-        {id: v1(), title: 'What to learn', filter: 'completed'},
-        {id: v1(), title: 'What to buy', filter: 'active'}
-    ]
+    let [tasksObj, setTasksObj] = useState({
+        [todolistId1]: [
+            {id: v1(), title: "HTML&CSS", isDone: true},
+            {id: v1(), title: "JS", isDone: true},
+            {id: v1(), title: "ReactJS", isDone: false},
+            {id: v1(), title: "Graph Ql", isDone: false},
+            {id: v1(), title: "Redux", isDone: true},
+        ],
+        [todolistId2]: [
+            {id: v1(), title: "Book", isDone: true},
+            {id: v1(), title: "Milk", isDone: false},
+            {id: v1(), title: "ReactJS", isDone: false},
+        ]
+    })
 
     return (
         <div className="App">
             {todoLists.map((tl) => {
-                let tasksForTodolist = tasks
+                let tasksForTodolist = tasksObj[tl.id]
                 if (tl.filter === 'active') {
-                    tasksForTodolist = tasks.filter((el) => !el.isDone)
+                    tasksForTodolist = tasksForTodolist.filter((el) => !el.isDone)
                 }
                 if (tl.filter === 'completed') {
-                    tasksForTodolist = tasks.filter((el) => el.isDone)
+                    tasksForTodolist = tasksForTodolist.filter((el) => el.isDone)
                 }
                 return (
-                    <TodoList title={tl.title}
-                              filter={tl.filter}
-                              tasks={tasksForTodolist}
-                              removeTask={removeTask}
-                              changeFilter={changeFilter}
-                              addTask={addTask}
-                              onChangeCheckBox={onChangeCheckBox}
+                    <TodoList
+                        key={tl.id}
+                        title={tl.title}
+                        id={tl.id}
+                        filter={tl.filter}
+                        tasks={tasksForTodolist}
+                        removeTask={removeTask}
+                        changeFilter={changeFilter}
+                        addTask={addTask}
+                        onChangeCheckBox={onChangeCheckBox}
                     />)
             })}
         </div>

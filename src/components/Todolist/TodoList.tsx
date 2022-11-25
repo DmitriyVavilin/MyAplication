@@ -5,13 +5,14 @@ import s from './TodoList.module.css'
 
 
 type TodoListPropsType = {
+    id: string
     title: string
     tasks: TaskType[]
     filter: FilterValueType
-    removeTask: (taskId: string)=>void
-    changeFilter:(value: FilterValueType)=>void
-    addTask:(title: string)=>void
-    onChangeCheckBox: (taskId: string,eventValue: boolean )=>void
+    removeTask: (taskId: string, todoListId: string)=>void
+    changeFilter:(value: FilterValueType, todoListId: string)=>void
+    addTask:(title: string, todoListId: string)=>void
+    onChangeCheckBox: (taskId: string,eventValue: boolean, todoListId: string )=>void
 }
 
 export const TodoList = (props: TodoListPropsType) => {
@@ -22,7 +23,7 @@ export const TodoList = (props: TodoListPropsType) => {
 
     const addTask = () => {
         if (title.trim() !== '') {
-            props.addTask(title.trim())
+            props.addTask(title.trim(), props.id)
             setTitle('')
         } else {
             setError('Title is required')
@@ -41,15 +42,15 @@ export const TodoList = (props: TodoListPropsType) => {
     }
 
     const removeTaskHandler = (tId: string) => { // Второе решение
-        props.removeTask(tId)
+        props.removeTask(tId, props.id)
     }
 
     const changeFilterHandler = (filterValue: FilterValueType) => {
-        props.changeFilter(filterValue)
+        props.changeFilter(filterValue, props.id)
     }
 
     const onChangeCheckBoxHandler = (tId: string,eventValue: boolean) => {
-        props.onChangeCheckBox(tId,eventValue)
+        props.onChangeCheckBox(tId,eventValue, props.id)
     }
 
 
