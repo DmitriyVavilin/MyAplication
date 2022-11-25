@@ -23,7 +23,14 @@ function App() {
         let tasks = tasksObj[todoListId]
         const filterTasks = tasks.filter((el) => el.id !== taskId)
         tasksObj[todoListId] = filterTasks
-        setTasksObj({...tasksObj})
+        setTasks({...tasksObj})
+    }
+
+    const removeTodolist = (todoListId: string) => {
+        const filteredTodoList = todoLists.filter(el => el.id !== todoListId)
+        setTodolists([...filteredTodoList])
+        delete tasksObj[todoListId]
+        setTasks({...tasksObj})
     }
 
 
@@ -40,13 +47,13 @@ function App() {
         let tasks = tasksObj[todoListId]
         let newTask = [task, ...tasks]
         tasksObj[todoListId] = newTask
-        setTasksObj({...tasksObj})
+        setTasks({...tasksObj})
     }
 
     const onChangeCheckBox = (taskId: string, eventValue: boolean, todoListId: string) => {
         let tasks = tasksObj[todoListId]
         let task = tasks.find(el => el.id === taskId ? {...el, isDone: eventValue} : el)
-        setTasksObj({...tasksObj})
+        setTasks({...tasksObj})
     }
 
     let todolistId1 = v1()
@@ -58,7 +65,7 @@ function App() {
                 '', filter: 'active'}
     ])
 
-    let [tasksObj, setTasksObj] = useState({
+    let [tasksObj, setTasks] = useState({
         [todolistId1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
             {id: v1(), title: "JS", isDone: true},
@@ -85,6 +92,7 @@ function App() {
                 }
                 return (
                     <TodoList
+                        removeTodolist={removeTodolist}
                         key={tl.id}
                         title={tl.title}
                         id={tl.id}

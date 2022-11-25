@@ -12,7 +12,8 @@ type TodoListPropsType = {
     removeTask: (taskId: string, todoListId: string)=>void
     changeFilter:(value: FilterValueType, todoListId: string)=>void
     addTask:(title: string, todoListId: string)=>void
-    onChangeCheckBox: (taskId: string,eventValue: boolean, todoListId: string )=>void
+    onChangeCheckBox: (taskId: string,eventValue: boolean, todoListId: string)=>void
+    removeTodolist:(todoListId: string)=>void
 }
 
 export const TodoList = (props: TodoListPropsType) => {
@@ -53,10 +54,14 @@ export const TodoList = (props: TodoListPropsType) => {
         props.onChangeCheckBox(tId,eventValue, props.id)
     }
 
+    const removeTodolistHandler = (todoListId: string) => {
+        props.removeTodolist(todoListId)
+    }
+
 
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>{props.title} <button onClick={()=>removeTodolistHandler(props.id)}>xxx</button></h3>
             <div>
                 <input className={error ?s.error : ''} value={title} onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}/>
