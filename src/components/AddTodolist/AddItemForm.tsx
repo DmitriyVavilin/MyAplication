@@ -3,8 +3,7 @@ import s from "../Todolist/TodoList.module.css";
 import {Button} from "../Button/Button";
 
 type AddTodoList = {
-    id: string
-    addItem:(title: string, todoListId: string)=>void
+    addItem:(title: string)=>void
 }
 
 export const AddItemForm = (props:AddTodoList) => {
@@ -13,7 +12,7 @@ export const AddItemForm = (props:AddTodoList) => {
 
     const addTask = () => {
         if (title.trim() !== '') {
-            props.addItem(title.trim(), props.id)
+            props.addItem(title.trim())
             setTitle('')
         } else {
             setError('Title is required')
