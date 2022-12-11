@@ -46,15 +46,15 @@ export const TodoList = (props: TodoListPropsType) => {
             <AddItemForm addItem={addTask}/>
             <ul>
                 {props.tasks.map((el) => {
-                    // const removeTaskHandler = () => {  // Первое решение
-                    //     props.removeTask(el.id)
-                    // }
+                    const onChangeTitleHanler = () => {
+
+                    }
 
                     return <li className={el.isDone ? s.isDone : ''}
                                key={el.id}>
                         <input type="checkbox" checked={el.isDone}
                                onChange={(event) => onChangeCheckBoxHandler(el.id, event.currentTarget.checked)}/>
-                        <EditableSpan title={el.title} editMode={false}/>
+                        <EditableSpan title={el.title} onChange={(value)=>{alert(value)}}/>
                         <Button name={'XXX'} callBack={() => removeTaskHandler(el.id)}/>
                     </li>
                 })}
